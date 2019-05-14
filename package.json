@@ -2,10 +2,10 @@
   "name": "example-create-react-app-express",
   "version": "1.0.0",
   "scripts": {
-    "client-setup": "cd client && yarn",
-    "client": "cd client && yarn start",
-    "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "client-setup": "cd client && npm install",
+    "client": "cd client && npm start",
+    "server": "node server.js",
+    "dev": "concurrently --kill-others-on-fail \"nodemon server\" \"yarn client\""
   },
   "dependencies": {
     "body-parser": "^1.18.3",
