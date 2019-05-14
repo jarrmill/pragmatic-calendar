@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "client-setup": "cd client && npm install",
+    "client-server": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "client": "cd client && npm start",
     "server": "node server.js",
     "dev": "concurrently --kill-others-on-fail \"nodemon server\" \"yarn client\""
