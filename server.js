@@ -1,18 +1,24 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const port = process.env.PORT || 5000;
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const morgan = require('morgan');
+const axios = require('axios');
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
-});
+const app = express()
+const port = 3000
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.use(morgan('dev'));
+
+app.use(express.static('./public'));
+
+app.get('/api/history', (req, res) => {
+  axios.get('https://api.coindesk.com/v1/bpi/historical/close.json')
+    .then(data => {
+      console.log('Got data!', data.data);
+      res.json(data.data);
+    })
+    .catch(err => {
+      console.error('Error!', err)
+      res.json();
+    });
+})
+
+app.listen(port, () => console.log(`Server listening on port ${port}`));
